@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/your-username/your-repo.git'  // Your repo with Dockerfile
+                git 'https://github.com/SouravGharge/jenkins-basics/'  // Your repo with Dockerfile
             }
         }
 
