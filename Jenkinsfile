@@ -1,35 +1,24 @@
 pipeline {
     agent any
 
-    environment {
-        IMAGE_NAME = 'jenkins-sample-image'
-        TAG = 'latest'
-    }
-
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/SouravGharge/jenkins-basics/'  // Your repo with Dockerfile
+                git 'https://github.com/SouravGharge/jenkins-basics/'  // My repository
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                sh "docker build -t ${IMAGE_NAME}:${TAG} ."
+                sh "docker pull jenkins/jenkins"  // Docker pulls jenkins image
             }
         }
 
         stage('Scan with Grype') {
             steps {
                 sh '''
-                    echo "[*] Checking if Grype is installed..."
-                    if ! command -v grype &> /dev/null; then
-                        echo "[*] Installing Grype..."
-                        curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin
-                    fi
-
                     echo "[*] Running Grype scan..."
-                    grype ${IMAGE_NAME}:${TAG} --fail-on high -o table
+                    grype jenkins/jenkins  // Grype jenkins scan
                 '''
             }
         }
