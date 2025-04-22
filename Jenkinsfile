@@ -2,12 +2,6 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/SouravGharge/jenkins-basics.git'  // My repository
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
                 sh "docker pull jenkins/jenkins"  // Docker pulls jenkins image
